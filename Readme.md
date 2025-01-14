@@ -132,3 +132,69 @@ li.remove();
 ```
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+# Event Listeners
+* this is onclick event directly added to button element
+``` javascript
+ <button class="btn-1" onclick="alert('I love JavaScript')">Enter</button>
+
+
+// Adding event Listener
+// syntax : element.addEventListeners("click", function(){});
+
+const btnEl = document.querySelector('.btn-2')
+
+btnEl.addEventListener('click', function(){
+   alert(' I Love React JS')
+})
+
+
+
+// Mouse Over Event
+
+const boxThree = document.querySelector('.box3');
+
+function mouseOverFn(event){
+    event.target.style.backgroundColor = 'red'
+}
+
+function mouseOutFn(event){
+    event.target.style.backgroundColor = 'green'
+}
+
+
+boxThree.addEventListener("mouseover", mouseOverFn);
+boxThree.addEventListener("mouseout", mouseOutFn)
+
+ ```
+
+
+## EventListeners Example 2 :
+ - used for toggle some content 
+ - menu toggle etc
+ ```javascript
+ const btnEl = document.querySelector('.reveal-btn')
+const hiddenEl = document.querySelector('.hidden-content');
+
+function toggleFn(){
+    if(hiddenEl.classList.contains('reveal-btn')){
+        hiddenEl.classList.remove('reveal-btn')
+    } else{
+        hiddenEl.classList.add('reveal-btn')
+    }
+}
+
+
+btnEl.addEventListener('click', toggleFn)
+```
