@@ -1,3 +1,5 @@
+Learning resource : freecodecamp
+
 ```html
 <body>
     <div class="container">
@@ -133,8 +135,22 @@ li.remove();
 
 
 
-
-
+# DOM tree
+![Screenshot 2025-01-13 at 12 10 45 PM](https://github.com/user-attachments/assets/5c37d463-1442-4367-9d97-9e321fa78112)
+- everything you see in this diagram is in top of the node
+    - that includes elements, attributes, textContent, and even line breaks and comments are considered as nodes ⇒ all this together make the DOM tree
+- DOM object itself is the property of window object
+(window ⇒ is the global top level object representing the tab in the browser)
+(window object has access to tool bar, height and width of window, prompts and alerts)
+- Document is root node of DOM tree
+    - <html> is parent for head and body elements
+    - body and head are siblings
+    - body is parent to p and h1
+    - text contents inside h1 and p are child nodes
+    myHeader, myParagraph are nodes
+    - classes, id are also called nodes 
+    (they don’t participate in parent-child relation)
+    just act as properties only
 
 
 
