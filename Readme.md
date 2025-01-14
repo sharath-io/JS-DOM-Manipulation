@@ -157,6 +157,91 @@ li.remove();
 
 
 
+# Traversing in the DOM
+```html
+<body>
+    <div class="container">
+        <h1 id="main-heading">Favourite Movie Franchise</h1>
+        <ul>
+            <li class="list-item">
+                <span>Neo</span>
+                The Matrix</li>
+            <li class="list-item">Star Wars</li>
+            <li class="list-item">Harry Potter</li>
+            <li class="list-item">Lord of the Rings</li>
+            <li class="list-item">Marvel</li>
+        </ul>
+
+    </div>
+</body>
+```
+
+* Node Traversal
+* Element Node Traversal
+## Parent Node Traversal
+* parentNode is generally used to traverse the DOM
+
+```javascript
+let ul = document.querySelector('ul');
+
+console.log(ul);                // <ul>...</ul>
+console.log(ul.parentNode)      //<div class="container">...</div>
+console.log(ul.parentElement)   //<div class="container">...</div>
+console.log(ul.parentNode.parentNode)  //<body>...</body>
+console.log(ul.parentElement.parentElement)    //<body>...</body>
+
+//Example 2: 
+const html= document.documentElement;
+
+console.log(html);               // <html>....</html>
+console.log(html.parentNode)     // #document
+console.log(html.parentElement)  // null
+```
+
+## Child node traversal
+* Indentation is counted as text node
+* check childNodes and then apply style to that particular child
+
+```javascript
+// Child Node Traversal
+let ul = document.querySelector('ul');
+
+console.log(ul.childNodes); 
+// NodeList(11) [text, li.list-item, text, li.list-item, text, li.list-item, text, li.list-item, text, li.list-item, text]
+console.log(ul.firstChild);
+// #text
+console.log(ul.lastChild)
+// #text
+
+ ul.firstChild.style.backgroundColor = 'blue';
+// Uncaught TypeError: Cannot set properties of undefined (setting 'backgroundColor')
+// Here firstChild is a text
+
+// Whenever you are applying styles like this :
+// check childNodes
+ul.childNodes[1].style.backgroundColor = 'blue';
+```
+
+## Sibling Node Traversal
+* sibling node
+* sibling element node
+```js
+// Sibling Node Traversal
+let ul = document.querySelector('ul');
+const div = document.querySelector('div')
+
+
+console.log(div.childNodes);
+
+console.log(ul.previousSibling);
+console.log(ul.nextSibling)
+
+console.log(ul.previousElementSibling);
+console.log(ul.nextElementSibling) // null => no element nodes after the ul
+```
+
+
+
 
 
 
