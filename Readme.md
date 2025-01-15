@@ -317,6 +317,8 @@ btnEl.addEventListener('click', toggleFn)
 
 
 # Event Propogation
+![Screenshot 2025-01-14 at 9 17 36 PM](https://github.com/user-attachments/assets/fa7e6b87-9cc4-46fa-8ab6-2c18ba11b08f)
+
 Example : 
 ```html
 <body>
