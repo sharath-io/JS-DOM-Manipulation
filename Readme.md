@@ -221,6 +221,9 @@ console.log(ul.lastChild)
 // check childNodes
 ul.childNodes[1].style.backgroundColor = 'blue';
 ```
+![DOM traverska child nodes](https://github.com/user-attachments/assets/0f07fcd7-ab65-477d-9cd5-76a922ab076f)
+![Screenshot 2025-01-14 at 6 54 39 PM](https://github.com/user-attachments/assets/e9f385d1-e518-47c4-9816-21cc39157528)
+
 
 ## Sibling Node Traversal
 * sibling node
@@ -239,6 +242,9 @@ console.log(ul.nextSibling)
 console.log(ul.previousElementSibling);
 console.log(ul.nextElementSibling) // null => no element nodes after the ul
 ```
+![Screenshot 2025-01-14 at 7 01 38 PM](https://github.com/user-attachments/assets/a7b2d8dc-51c5-4d78-8e28-4c2362d23a41)
+![Screenshot 2025-01-14 at 7 03 45 PM](https://github.com/user-attachments/assets/968f7df8-92fb-4570-b1ea-8f53f1e6b1ae)
+
 
 
 
