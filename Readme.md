@@ -1,4 +1,17 @@
-Learning resource : freecodecamp
+Learning resource : freecodecamp & mdn docs
+
+# DOM - Document Object Model
+* DOM is the data representation of the objects that comprise the structure and content of a document on the web. 
+* DOM is a programming interface for web documents.
+* It represents the page so that programs can change the document structure, style, and content. 
+* The DOM represents the document as nodes and objects; that way, programming languages can interact with the page.
+
+The DOM is not a programming language, but without it, the JavaScript language wouldn't have any model or notion of web pages, HTML documents, SVG documents, and their component parts. The document as a whole, the head, tables within the document, table headers, text within the table cells, and all other elements in a document are parts of the document object model for that document. They can all be accessed and manipulated using the DOM and a scripting language like JavaScript.
+
+
+The DOM is not part of the JavaScript language, but is instead a Web API used to build websites. JavaScript can also be used in other contexts. For example, Node.js runs JavaScript programs on a computer, but provides a different set of APIs, and the DOM API is not a core part of the Node.js runtime.
+
+The DOM was designed to be independent of any particular programming language, making the structural representation of the document available from a single, consistent API. 
 
 ```html
 <body>
@@ -221,9 +234,6 @@ console.log(ul.lastChild)
 // check childNodes
 ul.childNodes[1].style.backgroundColor = 'blue';
 ```
-![DOM traverska child nodes](https://github.com/user-attachments/assets/0f07fcd7-ab65-477d-9cd5-76a922ab076f)
-![Screenshot 2025-01-14 at 6 54 39 PM](https://github.com/user-attachments/assets/e9f385d1-e518-47c4-9816-21cc39157528)
-
 
 ## Sibling Node Traversal
 * sibling node
@@ -242,9 +252,6 @@ console.log(ul.nextSibling)
 console.log(ul.previousElementSibling);
 console.log(ul.nextElementSibling) // null => no element nodes after the ul
 ```
-![Screenshot 2025-01-14 at 7 01 38 PM](https://github.com/user-attachments/assets/a7b2d8dc-51c5-4d78-8e28-4c2362d23a41)
-![Screenshot 2025-01-14 at 7 03 45 PM](https://github.com/user-attachments/assets/968f7df8-92fb-4570-b1ea-8f53f1e6b1ae)
-
 
 
 
@@ -304,4 +311,310 @@ function toggleFn(){
 
 
 btnEl.addEventListener('click', toggleFn)
+```
+
+
+
+
+# Event Propogation
+Example : 
+```html
+<body>
+        <div class="div2">2
+            <div class="div1">1
+                <button>Click</button>
+            </div>
+        </div>
+
+        <script src="./script.js"></script>
+</body>
+```
+
+- Event propagation refers to how an event travels through the [Document Object Model](https://www.notion.so/c3358aa95f70458ab07d616c4ea4b15e?pvs=21) (DOM) tree, and it can be thought of as electricity running through a wire until it reaches its destination
+- The DOM is full of nodes, and when referring to event propagation and events, the event needs to pass through every node on the DOM until it reaches the end or is forcibly stopped
+- Event propagation is also the umbrella term that covers three phases when dealing with event listeners:
+1. **Event Capturing**
+2. **Target**
+3. **Event Bubbling**
+- The capturing phase starts from the root and travels all the way to the target,
+- then it goes into the bubbling phase, which travels back up from the target to the root
+- The target phase is a DOM node in which we click, and in the given example, the button at the bottom has a click event attached to it, making it the target phase
+- The bubbling phase is essentially the opposite of the capture phase, traveling back up the DOM and notifying every element
+- In the provided code example, there are several elements nesting inside of each other, with event listeners on pretty much everything in the [DOM](https://www.notion.so/c3358aa95f70458ab07d616c4ea4b15e?pvs=21) tree
+- The event listener function includes a parameter 'e' which represents the event object, containing information about the event that occurred on the target element
+- The third parameter in the event listener function is a boolean value that dictates whether to use event capture or event bubbling, with 'true' indicating event capture
+
+```jsx
+// Event Propogation 
+// Event caputing => top to bottom => true 
+
+window.addEventListener('click', function(){
+    console.log('window')
+},true);
+
+document.addEventListener('click', function(){
+    console.log('document');
+},true);
+
+document.querySelector('.div2').addEventListener('click', function(){
+    console.log('DIV 2');
+},true);
+
+document.querySelector('.div1').addEventListener('click', function(){
+    console.log('DIV 1');
+},true);
+
+document.querySelector('button').addEventListener('click', function(e){
+    console.log(e)
+},true);
+
+
+* o/p: when button is clicked
+window
+document
+DIV 2
+DIV 1
+PointerEvent {isTrusted: true, pointerId: 3, width: 1, height: 1, pr}
+
+* o/p: when div 1 is clicked
+window
+document
+DIV 2
+DIV 1
+
+* o/p: when div 2 is clicked
+window
+document
+DIV 2
+```
+
+* True ⇒ event capturing (top to down until target)***
+
+* False (by default)⇒ event bubbling (target to top (window))
+
+- Event capture starts from the window and goes down to the target element, notifying all elements it comes across, while event bubbling starts from the target element and goes up to the window
+- The event object 'e' contains various properties and information about the event, including the event type, location on the screen, and whether the shift key was pressed
+- The 'target' property of the event object represents the element that the event is actually on, which is the button in this case
+- Using the 'target' property, the event can be manipulated to change the text of the button when clicked, by accessing the button element and changing its inner text
+- To initiate the bubbling phase, the boolean value in the event listener function needs to be set to 'false', which will start the event from the target element and go up to the window
+- Event bubbling occurs when an event starts from the target element and propagates upwards to the highest position in the [DOM](https://www.notion.so/c3358aa95f70458ab07d616c4ea4b15e?pvs=21) tree, and this can be stopped using the stopPropagation method
+- To stop event propagation at a specific element, the stopPropagation method can be used within the event listener function of that element
+
+
+```jsx
+// e.stopPropogation():
+// if we want to stop event capturing or evbent bubbling
+// suppose at div 2
+document.querySelector('.div2').addEventListener('click', function(e){
+   e.stopPropagation();
+    console.log('DIV 2');
+},true);
+
+o/p: event capturing starts from widnow towards target
+but stopped at DIV2
+window
+document
+DIV2
+```
+
+- Event capturing is the opposite of event bubbling, where the event starts from the window and propagates downwards to the target element, and stopPropagation can also be used to stop event capturing
+
+```jsx
+// Event Propogation :
+// EVent bubbling example : bottom to top
+
+window.addEventListener('click', function(){
+    console.log('window')
+},false);
+
+document.addEventListener('click', function(){
+    console.log('document');
+},false);
+
+document.querySelector('.div2').addEventListener('click', function(e){
+    console.log('DIV 2');
+},false);
+
+document.querySelector('.div1').addEventListener('click', function(){
+    console.log('DIV 1');
+},false);
+
+document.querySelector('button').addEventListener('click', function(e){
+    console.log(e)
+},false);
+
+o/p:
+PointerEvent {isTrusted: true, pointerId: 3, width: 1, height: 1, pressure: 0, …}DIV 1
+DIV1
+DIV 2
+document
+window
+```
+
+- The once property can be used to ensure that an event listener is only triggered once, even if the event is triggered multiple times
+- Setting the once property to true will prevent the event listener from being triggered again after the first time
+- in place of true/ false we can also give
+
+```jsx
+// {once:true}
+// Event Propogation
+
+window.addEventListener('click', function(){
+    console.log('window')
+},false);
+
+document.addEventListener('click', function(){
+    console.log('document');
+},false);
+
+document.querySelector('.div2').addEventListener('click', function(e){
+    console.log('DIV 2');
+},{once:true});
+
+document.querySelector('.div1').addEventListener('click', function(){
+    console.log('DIV 1');
+},false);
+
+document.querySelector('button').addEventListener('click', function(e){
+    console.log(e)
+},false);
+
+o/p: DIV2 is executed only once 
+PointerEvent {isTrusted: true, pointerId: 3, width: 1, height: 1, pressure: 0, …}
+DIV 1
+DIV 2
+document
+window
+PointerEvent {isTrusted: true, pointerId: 5, width: 1, height: 1, pressure: 0, …}
+DIV 1
+document
+window
+```
+
+- The preventDefault method can be used to prevent the default behavior of an element or event from occurring, and this method is dependent on the type of element and the context of the event
+- The preventDefault method can be used to prevent the default behavior of an anchor tag, such as navigating to a new page, when clicked
+- To use the preventDefault method, the event listener must be attached to the element that has the default behavior that needs to be prevented
+- The default behavior of an anchor tag is to try and redirect to somewhere else, causing a quick refresh after firing off all events
+- This default behavior can be stopped using the preventDefault method, which can be applied to the event object of the anchor tag
+- By applying the preventDefault method, the anchor tag will no longer try to redirect, allowing the events to fire off without a quick refresh, and the content changes will remain visible
+- When the preventDefault method is applied, clicking on the button will show the bubbling phase and the content will change and stay visible, without redirecting to somewhere else
+
+```jsx
+// e.preventDefault() example
+// as anchor element by default tries to redireect to somewhere else 
+// causing quick refresh
+
+window.addEventListener('click', function(){
+    console.log('window')
+},false);
+
+document.addEventListener('click', function(){
+    console.log('document');
+},false);
+
+document.querySelector('.div2').addEventListener('click', function(e){
+    console.log('DIV 2');
+},{once:true});
+
+document.querySelector('.div1').addEventListener('click', function(){
+    console.log('DIV 1');
+},false);
+
+document.querySelector('.button').addEventListener('click', function(e){
+    e.preventDefault();
+    console.log(e)
+},false);
+```
+
+
+
+* Event Delegation
+
+```js
+// Example : here if we click on a list item 
+// background of that list should be changed
+
+
+document.querySelector('#football').addEventListener('click', function(e){
+    console.log('football is clicked');
+
+    const target = event.target;
+
+    if(target.matches('li')){
+        target.style.backgroundColor = 'lightgray'
+    }
+})
+
+document.querySelector('#basketball').addEventListener('click', function(e){
+    console.log('basketball is clicked');
+
+    const target = event.target;
+
+    if(target.matches('li')){
+        target.style.backgroundColor = 'lightgray'
+    }
+})
+
+document.querySelector('#boxing').addEventListener('click', function(e){
+    console.log('boxing is clicked');
+
+    const target = event.target;
+
+    if(target.matches('li')){
+        target.style.backgroundColor = 'lightgray'
+    }
+})
+
+document.querySelector('#tennis').addEventListener('click', function(e){
+    console.log('tennis is clicked');
+
+    const target = event.target;
+
+    if(target.matches('li')){
+        target.style.backgroundColor = 'lightgray'
+    }
+})
+
+document.querySelector('#golf').addEventListener('click', function(e){
+    console.log('golf is clicked');
+
+    const target = event.target;
+
+    if(target.matches('li')){
+        target.style.backgroundColor = 'lightgray'
+    }
+})
+```
+
+* instead of writing event listeners to each list item
+* we can delegate this to parent element
+* Event Delegation
+* for good code quality and code maintenance
+* using eveny delegation we save a ton on memory => which vastly improves performance
+
+## It allows users to append a SINGLE event listener to a parent element that adds it to all of its parent 
+```js
+document.querySelector('#sports').addEventListener('click', function(e){
+
+console.log( e.target.getAttribute('id') + ' is clicked')
+
+const target = e.target;
+
+if(target.matches('li')){
+   target.style.backgroundColor = 'lightgray'
+  }
+})
+```
+
+## AND future descendants that matchg a selector
+
+```js
+const sports = document.querySelector('ul');
+
+const newSport = document.createElement('li');
+
+newSport.innerText = 'rubby';
+newSport.setAttribute('id', 'rubby');
+
+sports.append(newSport)
 ```
