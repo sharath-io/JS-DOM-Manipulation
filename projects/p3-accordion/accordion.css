@@ -1,0 +1,44 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+}
+
+body{
+    background:url('./puzzle.jpeg') no-repeat center center/ cover;
+    height:100vh;
+}
+.accordion{
+    border:1px solid black;
+    width: 500px;
+    margin: 8rem auto;
+    padding:30px;
+    border-radius: 10px;
+    background-color: white;
+}
+h1{
+    margin-bottom: 2rem;
+    text-align:center;
+}
+
+.accordion-item{
+    margin-bottom: 30px;
+    border-bottom:1px solid forestgreen;
+}
+
+.accordion-header{
+    font-size: 20px;
+    font-weight:900;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+}
+
+.accordion-content{
+    display:none;
+    margin:10px 0;
+}
+
+.accordion-content.show{
+    display: block;
+}
